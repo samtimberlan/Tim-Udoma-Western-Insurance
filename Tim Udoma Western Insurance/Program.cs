@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Tim_Udoma_Western_Insurance.Data.Models;
+
 namespace Tim_Udoma_Western_Insurance
 {
     public class Program
@@ -13,6 +16,8 @@ namespace Tim_Udoma_Western_Insurance
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<WIShopContext>(
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
