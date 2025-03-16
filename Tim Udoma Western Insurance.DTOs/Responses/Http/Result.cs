@@ -51,7 +51,7 @@ namespace Tim_Udoma_Western_Insurance.DTOs.Responses.Http
 
         public bool Success { get; set; } = false;
         public string Title { get; set; }
-        public int? Status { get; set; }
+        public int Status { get; set; }
         public string Detail { get; set; }
         public string Instance { get; set; }
         public string Message { get; set; }

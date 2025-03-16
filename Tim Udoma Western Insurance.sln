@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance", "Tim Udoma Western Insurance\Tim Udoma Western Insurance.csproj", "{EBB0C5E1-0AD1-43BB-8717-E15E6496EA0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance.API", "Tim Udoma Western Insurance\Tim Udoma Western Insurance.API.csproj", "{EBB0C5E1-0AD1-43BB-8717-E15E6496EA0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance.Services", "Tim Udoma Western Insurance.Services\Tim Udoma Western Insurance.Services.csproj", "{91657028-6392-4F69-8942-F8A9647633B0}"
 EndProject

@@ -10,22 +10,23 @@ using Tim_Udoma_Western_Insurance.Services.Interfaces;
 
 namespace Tim_Udoma_Western_Insurance.Services
 {
-    public class ProductService : BaseService, IProductService
+    /// <summary>
+    /// Constructor for ProductService.
+    /// </summary>
+    /// <param name="dBContext"></param>
+    /// <param name="logger"></param>
+    public class ProductService(WIShopDBContext dBContext, INotificationService notificationService, ILogger<BaseService> logger) : BaseService(logger), IProductService
     {
-        private readonly WIShopDBContext _dBContext;
-        private readonly ILogger<BaseService> _logger;
+        private readonly WIShopDBContext _dBContext = dBContext;
+        private readonly INotificationService _notificationService = notificationService;
+        private readonly ILogger<BaseService> _logger = logger;
 
-        public ProductService(WIShopDBContext dBContext, ILogger<BaseService> logger) : base(logger)
-        {
-            _dBContext = dBContext;
-            _logger = logger;
-        }
-
-        public async Task<Result> AddProductAsync(ProductDTO product)
+        #region API Methods
+        public async Task<Result> AddAsync(ProductDTO product)
         {
             _logger.LogInformation("Adding product with SKU: {sku}", product.Sku);
-            bool nameExists = await _dBContext.Products.AnyAsync(p => p.Sku == product.Sku);
-            if (nameExists)
+            bool skuExists = await _dBContext.Products.AnyAsync(p => p.Sku == product.Sku);
+            if (skuExists)
             {
                 _logger.LogError("Product with SKU: {sku} already exists", product.Sku);
                 return new ErrorResult("Product with SKU already exists", StatusCodes.Status409Conflict);
@@ -48,7 +49,7 @@ namespace Tim_Udoma_Western_Insurance.Services
             return new SuccessResult("Product added successfully");
         }
 
-        public async Task<Result> GetAllProductsAsync(string searchTerm, int pageNumber, int pageSize, bool onlyActive = true)
+        public async Task<Result> GetAllAsync(string searchTerm, int pageNumber, int pageSize, bool onlyActive = true)
         {
             _logger.LogInformation("Getting all products");
             IQueryable<ProductResponse> productQuery = _dBContext.Products
@@ -69,10 +70,78 @@ namespace Tim_Udoma_Western_Insurance.Services
             _logger.LogInformation("Retrieved {count} products", products.Count);
             return new SuccessResult(products);
         }
-
-        public async Task<Result> DeleteProduct()
+        public async Task<Result> Get(string SKU, bool onlyActive = true)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Getting product with SKU: {SKU}", SKU);
+            Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU && p.Active == onlyActive);
+            if (product == null)
+            {
+                _logger.LogError("Product with SKU: {SKU} not found", SKU);
+                return new ErrorResult("Product not found", StatusCodes.Status404NotFound);
+            }
+            else
+            {
+                ProductResponse productResponse = new()
+                {
+                    SKU = product.Sku,
+                    Title = product.Title,
+                    Description = product.Description,
+                    Active = product.Active,
+                    DateCreated = product.DateCreated,
+                    Reference = product.Reference.ToString()
+                };
+                _logger.LogInformation("Retrieved product with SKU: {SKU}", SKU);
+                return new SuccessResult(productResponse);
+            }
         }
+
+        public async Task<Result> DeleteAsync(string SKU)
+        {
+            _logger.LogInformation("Deleting product with SKU: {SKU}", SKU);
+            Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU);
+            if (product == null)
+            {
+                _logger.LogError("Product with SKU: {SKU} not found", SKU);
+                return new ErrorResult("Product not found", StatusCodes.Status404NotFound);
+            }
+            else
+            {
+                // In production, this should be a soft delete
+                _dBContext.Products.Remove(product);
+                await _dBContext.SaveChangesAsync();
+                _logger.LogInformation("Product with SKU: {SKU} deleted successfully", SKU);
+                return new SuccessResult("Product deleted successfully");
+            }
+        }
+
+        public async Task<Result> Deactivate(string SKU)
+        {
+            _logger.LogInformation("Deactivating product with SKU: {SKU}", SKU);
+            Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU);
+            if (product == null)
+            {
+                _logger.LogError("Product with SKU: {SKU} not found", SKU);
+                return new ErrorResult("Product not found", StatusCodes.Status404NotFound);
+            }
+            else
+            {
+                product.Active = false;
+                await _dBContext.SaveChangesAsync();
+                NotifyUsers("1", "2");
+                _logger.LogInformation("Product with SKU: {SKU} deactivated successfully", SKU);
+                return new SuccessResult("Product deactivated successfully");
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        private void NotifyUsers(string buyerId, string sellerId)
+        {
+            string message = "Product Deactivated";
+            _notificationService.Notify(buyerId, message);
+            _notificationService.Notify(sellerId, message);
+        }
+        #endregion
+
     }
 }

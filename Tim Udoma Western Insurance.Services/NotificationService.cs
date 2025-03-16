@@ -1,19 +1,17 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using Tim_Udoma_Western_Insurance.Services.Interfaces;
 
 namespace Tim_Udoma_Western_Insurance.Services
 {
-    class NotificationService : BaseService, INotificationService, INotify
+    class NotificationService(ILogger<BaseService> logger) : BaseService(logger), INotificationService
     {
-        private readonly ILogger<BaseService> _logger;
+        private readonly ILogger<BaseService> _logger = logger;
 
-        public NotificationService(ILogger<BaseService> logger) : base(logger)
-        {
-            _logger = logger;
-        }
         public void Notify(string userId, string message)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine($"Sending message...{userId} - {message}");
+            _logger.LogInformation($"Notified user {userId} of: {message}");
         }
     }
 }
