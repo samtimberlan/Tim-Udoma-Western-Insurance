@@ -23,7 +23,7 @@ public partial class Product
 
     public int CreatedBy { get; set; }
 
-    public Guid? Reference { get; set; }
+    public Guid Reference { get; set; }
 
     public virtual Buyer Buyer { get; set; }
 }

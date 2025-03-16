@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance", "Tim Udoma Western Insurance\Tim Udoma Western Insurance.csproj", "{EBB0C5E1-0AD1-43BB-8717-E15E6496EA0F}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance.Tests", "Tim Udoma Western Insurance.Tests\Tim Udoma Western Insurance.Tests.csproj", "{CFC017F3-7FC3-41BF-8C02-9852174CE823}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance.Data", "Tim Udoma Western Insurance.Data\Tim Udoma Western Insurance.Data.csproj", "{34226E6A-E553-41FB-8E44-9877E87F7220}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance.DTOs", "Tim Udoma Western Insurance.DTOs\Tim Udoma Western Insurance.DTOs.csproj", "{30F1AFF8-B8C6-4A0D-915C-454C6CB7FD82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tim Udoma Western Insurance.Shared", "Tim Udoma Western Insurance.Shared\Tim Udoma Western Insurance.Shared.csproj", "{F3F8A664-0F9D-43B4-9967-8E03E9553FED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{34226E6A-E553-41FB-8E44-9877E87F7220}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34226E6A-E553-41FB-8E44-9877E87F7220}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34226E6A-E553-41FB-8E44-9877E87F7220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30F1AFF8-B8C6-4A0D-915C-454C6CB7FD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30F1AFF8-B8C6-4A0D-915C-454C6CB7FD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30F1AFF8-B8C6-4A0D-915C-454C6CB7FD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30F1AFF8-B8C6-4A0D-915C-454C6CB7FD82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3F8A664-0F9D-43B4-9967-8E03E9553FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3F8A664-0F9D-43B4-9967-8E03E9553FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3F8A664-0F9D-43B4-9967-8E03E9553FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3F8A664-0F9D-43B4-9967-8E03E9553FED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

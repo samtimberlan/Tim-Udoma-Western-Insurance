@@ -16,7 +16,7 @@ namespace Tim_Udoma_Western_Insurance
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<WIShopContext>(
+            builder.Services.AddDbContextPool<WIShopDBContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
