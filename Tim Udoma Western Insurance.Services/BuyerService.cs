@@ -16,7 +16,7 @@ namespace Tim_Udoma_Western_Insurance.Services
         public async Task<Result> CreateAsync(DTOs.Requests.Buyer buyer)
         {
             _logger.LogInformation("Creating buyer with email: {email}", buyer.Email);
-            bool emailExists = await _dBContext.Buyers.AnyAsync(b => b.Email == buyer.Email);
+            bool emailExists = await _dBContext.Buyers.AnyAsync(b => b.Email.ToLower().Trim() == buyer.Email);
             if (emailExists)
             {
                 _logger.LogError("Buyer with email: {email} already exists", buyer.Email);

@@ -24,7 +24,7 @@ namespace Tim_Udoma_Western_Insurance.Services
         public async Task<Result> AddAsync(DTOs.Requests.Product product)
         {
             _logger.LogInformation("Adding product with SKU: {sku}", product.Sku);
-            bool skuExists = await _dBContext.Products.AnyAsync(p => p.Sku == product.Sku);
+            bool skuExists = await _dBContext.Products.AnyAsync(p => p.Sku.ToUpperInvariant().Trim() == product.Sku);
             if (skuExists)
             {
                 _logger.LogError("Product with SKU: {sku} already exists", product.Sku);
@@ -33,8 +33,8 @@ namespace Tim_Udoma_Western_Insurance.Services
             Data.Models.Product newProduct = new()
             {
                 Sku = product.Sku.Trim().ToUpperInvariant(),
-                Title = product.Title.Trim().ToUpperInvariant(),
-                Description = product.Description.Trim().ToUpperInvariant(),
+                Title = product.Title.Trim(),
+                Description = product.Description.Trim(),
                 BuyerId = 1,
                 Active = true,
                 DateCreated = DateTime.Now,
