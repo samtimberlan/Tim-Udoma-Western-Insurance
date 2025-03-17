@@ -1,6 +1,6 @@
 ﻿namespace Tim_Udoma_Western_Insurance.DTOs.Requests
 {
-    public class BuyerDTO
+    public class Buyer
     {
         public required string Name { get; set; }
 

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Tim_Udoma_Western_Insurance.Data.Models;
 using Tim_Udoma_Western_Insurance.DTOs.Extensions;
-using Tim_Udoma_Western_Insurance.DTOs.Requests;
 using Tim_Udoma_Western_Insurance.DTOs.Responses;
 using Tim_Udoma_Western_Insurance.DTOs.Responses.Http;
 using Tim_Udoma_Western_Insurance.Services.Interfaces;
@@ -22,7 +21,7 @@ namespace Tim_Udoma_Western_Insurance.Services
         private readonly ILogger<BaseService> _logger = logger;
 
         #region API Methods
-        public async Task<Result> AddAsync(ProductDTO product)
+        public async Task<Result> AddAsync(DTOs.Requests.Product product)
         {
             _logger.LogInformation("Adding product with SKU: {sku}", product.Sku);
             bool skuExists = await _dBContext.Products.AnyAsync(p => p.Sku == product.Sku);
@@ -31,7 +30,7 @@ namespace Tim_Udoma_Western_Insurance.Services
                 _logger.LogError("Product with SKU: {sku} already exists", product.Sku);
                 return new ErrorResult("Product with SKU already exists", StatusCodes.Status409Conflict);
             }
-            Product newProduct = new()
+            Data.Models.Product newProduct = new()
             {
                 Sku = product.Sku.Trim().ToUpperInvariant(),
                 Title = product.Title.Trim().ToUpperInvariant(),
@@ -49,11 +48,11 @@ namespace Tim_Udoma_Western_Insurance.Services
             return new SuccessResult("Product added successfully");
         }
 
-        public async Task<Result> GetAllAsync(string searchTerm, int pageNumber, int pageSize, bool onlyActive = true)
+        public async Task<Result> GetAllAsync(string? searchTerm, int pageNumber = 1, int pageSize = 1, bool onlyActive = true)
         {
             _logger.LogInformation("Getting all products");
             IQueryable<ProductResponse> productQuery = _dBContext.Products
-                .Where(p => p.Title.Contains(searchTerm) || p.Sku.Contains(searchTerm) && p.Active == onlyActive)
+                .Where(p => p.Active == onlyActive)
                 .AsNoTrackingWithIdentityResolution()
                 .OrderBy(p => p.Title)
                 .Select(p => new ProductResponse
@@ -66,6 +65,11 @@ namespace Tim_Udoma_Western_Insurance.Services
                     Reference = p.Reference.ToString()
                 });
 
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                productQuery = productQuery.Where(p => p.Title.Contains(searchTerm) || p.SKU.Contains(searchTerm));
+            }
+
             var products = await productQuery.ToPaginatedListAsync(pageNumber, pageSize);
             _logger.LogInformation("Retrieved {count} products", products.Count);
             return new SuccessResult(products);
@@ -73,7 +77,7 @@ namespace Tim_Udoma_Western_Insurance.Services
         public async Task<Result> Get(string SKU, bool onlyActive = true)
         {
             _logger.LogInformation("Getting product with SKU: {SKU}", SKU);
-            Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU && p.Active == onlyActive);
+            Data.Models.Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU && p.Active == onlyActive);
             if (product == null)
             {
                 _logger.LogError("Product with SKU: {SKU} not found", SKU);
@@ -98,7 +102,7 @@ namespace Tim_Udoma_Western_Insurance.Services
         public async Task<Result> DeleteAsync(string SKU)
         {
             _logger.LogInformation("Deleting product with SKU: {SKU}", SKU);
-            Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU);
+            Data.Models.Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU);
             if (product == null)
             {
                 _logger.LogError("Product with SKU: {SKU} not found", SKU);
@@ -117,7 +121,7 @@ namespace Tim_Udoma_Western_Insurance.Services
         public async Task<Result> Deactivate(string SKU)
         {
             _logger.LogInformation("Deactivating product with SKU: {SKU}", SKU);
-            Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU);
+            Data.Models.Product? product = await _dBContext.Products.FirstOrDefaultAsync(p => p.Sku == SKU);
             if (product == null)
             {
                 _logger.LogError("Product with SKU: {SKU} not found", SKU);

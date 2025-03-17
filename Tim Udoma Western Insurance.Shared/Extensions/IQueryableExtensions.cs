@@ -51,13 +51,8 @@ namespace Tim_Udoma_Western_Insurance.DTOs.Extensions
         /// <param name="pageSize">The page size</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>A paged list containing the requested items</returns>
-        public static async Task<PagedList<T>> CreateAsync<T>(
-            IQueryable<T> source,
-            int pageIndex,
-            int pageSize,
-            CancellationToken cancellationToken = default)
+        public static async Task<PagedList<T>> CreateAsync<T>(IQueryable<T> source, int pageIndex, int pageSize, CancellationToken cancellationToken = default)
         {
-            ValidatePaginationParameters(source, pageIndex, pageSize);
 
             try
             {
@@ -75,28 +70,12 @@ namespace Tim_Udoma_Western_Insurance.DTOs.Extensions
             }
         }
 
-        private static void ValidatePaginationParameters<T>(IQueryable<T> source, int pageIndex, int pageSize)
-        {
-            ArgumentNullException.ThrowIfNull(source);
-
-            if (pageIndex < 1)
-                throw new ArgumentOutOfRangeException(nameof(pageIndex), "Page index must be greater than or equal to 1.");
-
-            if (pageSize < 1)
-                throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size must be greater than or equal to 1.");
-        }
-
         private static async Task<int> GetTotalCountAsync<T>(IQueryable<T> source, CancellationToken cancellationToken)
         {
             return await source.CountAsync(cancellationToken);
         }
 
-        private static async Task<List<T>> FetchPageItemsAsync<T>(
-            IQueryable<T> source,
-            int pageIndex,
-            int pageSize,
-            int totalCount,
-            CancellationToken cancellationToken)
+        private static async Task<List<T>> FetchPageItemsAsync<T>(IQueryable<T> source, int pageIndex, int pageSize, int totalCount, CancellationToken cancellationToken)
         {
             // If page is out of bounds, return empty list
             if (totalCount == 0 || (pageIndex - 1) * pageSize >= totalCount)

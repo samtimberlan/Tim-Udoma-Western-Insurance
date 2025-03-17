@@ -4,7 +4,7 @@ using Tim_Udoma_Western_Insurance.Services.Interfaces;
 
 namespace Tim_Udoma_Western_Insurance.Services
 {
-    class NotificationService(ILogger<BaseService> logger) : BaseService(logger), INotificationService
+    public class NotificationService(ILogger<BaseService> logger) : BaseService(logger), INotificationService
     {
         private readonly ILogger<BaseService> _logger = logger;
 

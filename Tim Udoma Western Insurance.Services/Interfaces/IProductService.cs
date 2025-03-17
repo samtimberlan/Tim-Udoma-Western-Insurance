@@ -10,7 +10,7 @@ namespace Tim_Udoma_Western_Insurance.Services.Interfaces
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        Task<Result> AddAsync(ProductDTO product);
+        Task<Result> AddAsync(Product product);
         /// <summary>
         /// Delete a product with the specified SKU.
         /// </summary>

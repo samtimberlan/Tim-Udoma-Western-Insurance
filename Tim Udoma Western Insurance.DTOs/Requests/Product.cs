@@ -1,6 +1,6 @@
 ﻿namespace Tim_Udoma_Western_Insurance.DTOs.Requests
 {
-    public class ProductDTO
+    public class Product
     {
         public required string Sku { get; set; }
 
