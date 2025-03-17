@@ -1,4 +1,9 @@
 
+using Microsoft.EntityFrameworkCore;
+using Tim_Udoma_Western_Insurance.Data.Models;
+using Tim_Udoma_Western_Insurance.Services;
+using Tim_Udoma_Western_Insurance.Services.Interfaces;
+
 namespace Tim_Udoma_Western_Insurance
 {
     public class Program
@@ -10,9 +15,13 @@ namespace Tim_Udoma_Western_Insurance
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContextPool<WIShopDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IBuyerService, BuyerService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IBuyerService, BuyerService>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
 
             var app = builder.Build();
 
@@ -26,7 +35,6 @@ namespace Tim_Udoma_Western_Insurance
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

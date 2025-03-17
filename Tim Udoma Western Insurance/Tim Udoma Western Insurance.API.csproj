@@ -14,4 +14,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tim Udoma Western Insurance.Data\Tim Udoma Western Insurance.Data.csproj" />
+    <ProjectReference Include="..\Tim Udoma Western Insurance.Services\Tim Udoma Western Insurance.Services.csproj" />
+  </ItemGroup>
+
 </Project>

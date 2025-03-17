@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using Tim_Udoma_Western_Insurance.Services.Interfaces;
 
 namespace Tim_Udoma_Western_Insurance.Services
 {
-    class NotificationService : BaseService, INotificationService, INotify
+    public class NotificationService(ILogger<BaseService> logger) : BaseService(logger), INotificationService
     {
+        private readonly ILogger<BaseService> _logger = logger;
+
+        public void Notify(string userId, string message)
+        {
+            Debug.WriteLine($"Sending message...{userId} - {message}");
+            _logger.LogInformation($"Notified user {userId} of: {message}");
+        }
     }
 }

@@ -7,4 +7,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tim Udoma Western Insurance.Data\Tim Udoma Western Insurance.Data.csproj" />
+    <ProjectReference Include="..\Tim Udoma Western Insurance.DTOs\Tim Udoma Western Insurance.DTOs.csproj" />
+    <ProjectReference Include="..\Tim Udoma Western Insurance.Shared\Tim Udoma Western Insurance.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

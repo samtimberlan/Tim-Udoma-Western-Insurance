@@ -7,4 +7,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tim Udoma Western Insurance.Data\Tim Udoma Western Insurance.Data.csproj" />
+    <ProjectReference Include="..\Tim Udoma Western Insurance.DTOs\Tim Udoma Western Insurance.DTOs.csproj" />
+    <ProjectReference Include="..\Tim Udoma Western Insurance.Services\Tim Udoma Western Insurance.Services.csproj" />
+  </ItemGroup>
+
 </Project>
