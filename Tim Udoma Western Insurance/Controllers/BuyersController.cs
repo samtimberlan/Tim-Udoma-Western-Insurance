@@ -6,7 +6,7 @@ namespace Tim_Udoma_Western_Insurance.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BuyerController(IBuyerService buyerService) : ControllerBase
+    public class BuyersController(IBuyerService buyerService) : ControllerBase
     {
         private readonly IBuyerService _buyerService = buyerService;
 

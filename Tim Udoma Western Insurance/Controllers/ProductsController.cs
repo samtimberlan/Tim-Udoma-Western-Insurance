@@ -6,7 +6,7 @@ namespace Tim_Udoma_Western_Insurance.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController(IProductService productService) : Controller
+    public class ProductsController(IProductService productService) : Controller
     {
         private readonly IProductService _productService = productService;
 
